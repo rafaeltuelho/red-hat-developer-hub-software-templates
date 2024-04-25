@@ -17,12 +17,17 @@ spec:
   parameters:
     - title: Provide information about the new component
       required:
+        - gitlabHost
         - orgName
         - repoName
         - owner
         - system
         - port
       properties:
+        gitlabHost:
+          title: Gitlab Host
+          type: string
+          default: gitlab.com
         orgName:
           title: Organization Name
           type: string
@@ -91,9 +96,9 @@ spec:
       name: Publishing to the Source Code Repository
       action: publish:gitlab
       input:
-        allowedHosts: ['gitlab.com']
+        allowedHosts: ['${{ parameters.gitlabHost }}']
         description: ${{ parameters.description }}
-        repoUrl: gitlab.com?owner=${{ parameters.orgName }}&repo=${{ parameters.repoName }}
+        repoUrl: ${{ parameters.gitlabHost }}?owner=${{ parameters.orgName }}&repo=${{ parameters.repoName }}
         defaultBranch: main
 
     - id: register
